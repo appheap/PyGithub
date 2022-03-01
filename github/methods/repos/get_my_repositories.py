@@ -8,11 +8,11 @@ class GetMyRepositories(Scaffold):
     def get_my_repositories(
             self,
             *,
-            visibility: str = None,
+            visibility: str = 'all',
             affiliation: str = None,
             type: str = None,
-            sort: str = None,
-            direction: str = None,
+            sort: str = 'updated',
+            direction: str = 'desc',
             per_page: int = 100,
             page: int = None,
             since: str = None,
@@ -65,13 +65,13 @@ class GetMyRepositories(Scaffold):
         response = self.get_with_token(
             url='https://api.github.com/user/repos',
             params={
-                'visibility': visibility if visibility else 'all',
+                'visibility': visibility,
                 'affiliation': affiliation,
                 'type': type,
-                'sort': sort if sort else 'updated',
-                'direction': direction if direction else 'dsc',
-                'per_page': per_page if per_page else 100,
-                'page': page if page else 1,
+                'sort': sort,
+                'direction': direction,
+                'per_page': per_page,
+                'page': page,
                 'since': since,
                 'before': before,
             }
