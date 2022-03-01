@@ -5,6 +5,10 @@ from github.types import Repository
 
 
 class GetUserRepositories(Scaffold):
+    """
+    List repositories for a user
+    """
+
     def get_user_repositories(
             self,
             *,

@@ -5,6 +5,10 @@ from github.types import Repository
 
 
 class GetMyRepositories(Scaffold):
+    """
+    List repositories for the authenticated user
+    """
+
     def get_my_repositories(
             self,
             *,

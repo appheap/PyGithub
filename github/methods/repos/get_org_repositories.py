@@ -5,6 +5,10 @@ from github.types import Repository
 
 
 class GetOrgRepositories(Scaffold):
+    """
+    List organization repositories
+    """
+
     def get_org_repositories(
             self,
             *,
