@@ -1,2 +1,2 @@
 # PyGithub
-A Python Client for GitHub API
+A Python Client for the GitHub REST API
