@@ -7,6 +7,8 @@ authors = ["sigma1326 <taleb.zarhesh@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 requests = "^2.27.1"
+arrow = "^1.2.2"
+python-decouple = "^3.6"
 
 [tool.poetry.dev-dependencies]
 
