@@ -7,6 +7,7 @@ from github import types
 class Scaffold:
     user: Optional['types.GithubObject']
     headers: Optional['types.Headers']
+    _is_authenticated: bool
 
     def __init__(self):
         pass

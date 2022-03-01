@@ -11,12 +11,23 @@ class GithubClient(Methods, Scaffold, Object):
 
     user: Optional['GithubObject']
     headers: Optional['Headers']
+    _is_authenticated: bool
 
-    def __init__(self, *, login: str = None, token: str = None) -> None:
+    def __init__(
+            self,
+            *,
+            login: str = None,
+            token: str = None,
+
+            auto_auth: bool = True,
+    ) -> None:
         super().__init__()
 
         self.username = login
         self.token = token
+
+        self.auto_auth = auto_auth
+        self._is_authenticated = False
 
         self._headers = {
             'Authorization': f'token {self.token}',
@@ -24,14 +35,3 @@ class GithubClient(Methods, Scaffold, Object):
         self._default_params = {
             'i': ''
         }
-
-        self._init_user()
-
-    def _init_user(self):
-        users, headers = self.get_my_info()
-        if users and headers:
-            self.users = users
-            self.headers = headers
-        else:
-            # todo: raise error
-            pass
