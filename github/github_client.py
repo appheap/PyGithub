@@ -35,3 +35,6 @@ class GithubClient(Methods, Scaffold, Object):
         self._default_params = {
             'i': ''
         }
+
+        if self.auto_auth:
+            self.authenticate_user()
