@@ -1,25 +1,16 @@
+from dataclasses import dataclass
 from typing import Optional
 
 from .object import Object
 
 
+@dataclass
 class RepoPermissions(Object):
-
-    def __init__(
-            self,
-            *,
-            admin: Optional['str'] = None,
-            maintain: Optional['str'] = None,
-            push: Optional['str'] = None,
-            triage: Optional['str'] = None,
-            pull: Optional['str'] = None,
-
-    ):
-        self.admin = admin
-        self.maintain = maintain
-        self.push = push
-        self.triage = triage
-        self.pull = pull
+    admin: bool
+    pull: bool
+    triage: Optional['bool']
+    push: bool
+    maintain: Optional['bool']
 
     @staticmethod
     def _parse(permissions: dict):
@@ -27,9 +18,9 @@ class RepoPermissions(Object):
             return None
 
         return RepoPermissions(
-            admin=permissions.get('admin', None),
+            admin=permissions.get('admin'),
             maintain=permissions.get('maintain', None),
-            push=permissions.get('push', None),
+            push=permissions.get('push'),
             triage=permissions.get('triage', None),
-            pull=permissions.get('pull', None),
+            pull=permissions.get('pull'),
         )

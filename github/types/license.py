@@ -1,34 +1,33 @@
+from dataclasses import dataclass
 from typing import Optional
 
 from .object import Object
 
 
-class License(Object):
+@dataclass
+class SimpleLicense(Object):
+    """
+    License Simple
+    """
 
-    def __init__(
-            self,
-            *,
-            key: Optional['str'] = None,
-            name: Optional['str'] = None,
-            spdx_id: Optional['str'] = None,
-            url: Optional['str'] = None,
-            node_id: Optional['str'] = None,
-    ):
-        self.key = key
-        self.name = name
-        self.spdx_id = spdx_id
-        self.url = url
-        self.node_id = node_id
+    key: str
+    name: str
+    url: str
+    spdx_id: str
+    node_id: str
+    html_url: Optional['str'] = None
 
     @staticmethod
-    def _parse(license: dict) -> Optional['License']:
-        if license is None or not len(license):
+    def _parse(license_dict: dict):
+        if not license_dict or not len(license_dict):
             return None
 
-        return License(
-            key=license.get('key'),
-            name=license.get('name'),
-            spdx_id=license.get('spdx_id'),
-            url=license.get('url'),
-            node_id=license.get('node_id'),
+        return SimpleLicense(
+            key=license_dict.get('key', None),
+            name=license_dict.get('name', None),
+            url=license_dict.get('url', None),
+            spdx_id=license_dict.get('spdx_id', None),
+            node_id=license_dict.get('node_id', None),
+            html_url=license_dict.get('html_url', None),
+
         )

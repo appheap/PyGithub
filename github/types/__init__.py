@@ -1,17 +1,18 @@
 from .github_object import GithubObject
 from .headers import Headers
-from .license import License
+from .license import SimpleLicense
 from .list import List
 from .object import Object
 from .repo_permissions import RepoPermissions
 from .repository import Repository
 from .github_error import GithubError
 from .github_response import GithubResponse
+from .user import SimpleUser
 
 __all__ = [
     'GithubObject',
     'Headers',
-    'License',
+    'SimpleLicense',
     'List',
     'Object',
     'RepoPermissions',
