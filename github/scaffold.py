@@ -19,3 +19,11 @@ class Scaffold:
             params: dict = None,
     ) -> 'requests.Response':
         pass
+
+    def post_with_token(
+            self,
+            *,
+            url: str,
+            data: dict = None,
+    ) -> 'requests.Response':
+        pass
