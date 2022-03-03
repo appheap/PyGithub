@@ -8,6 +8,7 @@ from .repository import Repository
 from .github_error import GithubError
 from .github_response import GithubResponse
 from .user import SimpleUser
+from .errors import RESPONSES, Response
 
 __all__ = [
     'GithubObject',
@@ -19,5 +20,7 @@ __all__ = [
     'Repository',
     'GithubError',
     'GithubResponse',
+    'RESPONSES',
+    'Response',
 
 ]
