@@ -39,7 +39,13 @@ class Response(Object):
 
     @staticmethod
     def _parse_unknown(status_code: int, message: str) -> 'Response':
-        return Response(
-            code=status_code,
-            description=message
-        )
+        if RESPONSES.get(status_code, None):
+            return Response(
+                code=status_code,
+                description=RESPONSES[status_code]
+            )
+        else:
+            return Response(
+                code=status_code,
+                description=message
+            )

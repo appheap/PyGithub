@@ -1,4 +1,4 @@
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Tuple
 
 from github.scaffold import Scaffold
 from github.types import Repository, Response
