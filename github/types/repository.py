@@ -8,6 +8,26 @@ from .user import SimpleUser
 
 
 @dataclass
+class CodeOfConduct(Object):
+    url: str
+    key: str
+    name: str
+    html_url: str
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['CodeOfConduct']:
+        if obj is None or not len(obj):
+            return None
+
+        return CodeOfConduct(
+            url=obj.get('url', None),
+            key=obj.get('key', None),
+            name=obj.get('name', None),
+            html_url=obj.get('html_url', None),
+        )
+
+
+@dataclass
 class Repository(Object):
     """
     A git repository
@@ -77,7 +97,7 @@ class Repository(Object):
     default_branch: str
     open_issues_count: int
     is_template: Optional['bool']
-    topics: List['str']
+    topics: Optional[List['str']]
     has_issues: bool
     has_projects: bool
     has_wiki: bool
@@ -89,20 +109,20 @@ class Repository(Object):
     pushed_at: str
     created_at: str
     updated_at: str
-    allow_rebase_merge: Optional['int']
-    template_repository: Optional['int']
-    temp_clone_token: Optional['int']
-    allow_squash_merge: Optional['int']
-    allow_auto_merge: Optional['int']
-    delete_branch_on_merge: Optional['int']
-    allow_merge_commit: Optional['int']
+    allow_rebase_merge: Optional['bool']
+    template_repository: Optional['Repository']
+    temp_clone_token: Optional['str']
+    allow_squash_merge: Optional['bool']
+    allow_auto_merge: Optional['bool']
+    delete_branch_on_merge: Optional['bool']
+    allow_merge_commit: Optional['bool']
     allow_forking: Optional['bool']
     subscribers_count: Optional['int']
     network_count: Optional['int']
     open_issues: int
     watchers: int
-    master_branch: Optional['int']
-    starred_at: Optional['int']
+    master_branch: Optional['str']
+    starred_at: Optional['str']
 
     @staticmethod
     def _parse(repo: dict) -> Optional['Repository']:
@@ -174,7 +194,7 @@ class Repository(Object):
             default_branch=repo.get('default_branch'),
             open_issues_count=repo.get('open_issues_count'),
             is_template=repo.get('is_template', None),
-            topics=repo.get('topics'),
+            topics=repo.get('topics', None),
             has_issues=repo.get('has_issues'),
             has_projects=repo.get('has_projects'),
             has_wiki=repo.get('has_wiki'),
@@ -200,4 +220,250 @@ class Repository(Object):
             watchers=repo.get('watchers'),
             master_branch=repo.get('master_branch', None),
             starred_at=repo.get('starred_at', None),
+        )
+
+
+@dataclass
+class FullRepository(Object):
+    """
+    Full Repository
+    """
+
+    id: int
+    node_id: str
+    name: str
+    full_name: str
+    owner: SimpleUser
+    private: bool
+    html_url: str
+    description: str
+    fork: str
+    url: str
+    archive_url: str
+    assignees_url: str
+    blobs_urls: str
+    branches_url: str
+    collaborators_url: str
+    comments_url: str
+    commits_url: str
+    compare_url: str
+    contents_url: str
+    contributors_url: str
+    deployments_url: str
+    downloads_url: str
+    events_url: str
+    forks_url: str
+    git_commits_url: str
+    git_refs_url: str
+    git_tags_url: str
+    git_url: str
+    issue_comment_url: str
+    issue_events_url: str
+    issues_url: str
+    keys_url: str
+    labels_url: str
+    languages_url: str
+    merges_url: str
+    milestones_url: str
+    notifications_url: str
+    pulls_url: str
+    releases_url: str
+    ssh_url: str
+    stargazers_url: str
+    statuses_url: str
+    subscribers_url: str
+    subscription_url: str
+    tags_url: str
+    teams_url: str
+    trees_url: str
+    clone_url: str
+    mirror_url: str
+    hooks_url: str
+    svn_url: str
+    homepage: str
+    language: str
+    forks_count: int
+    stargazers_count: int
+    watchers_count: int
+    size: int
+    default_branch: str
+    open_issues_count: int
+    is_template: Optional['bool']
+    topics: Optional[List['str']]
+    has_issues: bool
+    has_projects: bool
+    has_wiki: bool
+    has_pages: bool
+    has_downloads: bool
+    archived: bool
+    disabled: bool
+    visibility: Optional['str']
+    pushed_at: str
+    created_at: str
+    updated_at: str
+    permissions: Optional['RepoPermissions']
+    allow_rebase_merge: Optional['bool']
+    template_repository: Optional['Repository']
+    temp_clone_token: Optional['str']
+    allow_squash_merge: Optional['bool']
+    allow_auto_merge: Optional['bool']
+    delete_branch_on_merge: Optional['bool']
+    allow_merge_commit: Optional['bool']
+    allow_forking: Optional['bool']
+    subscribers_count: Optional['int']
+    network_count: Optional['int']
+    license: Optional['SimpleLicense']
+    organization: Optional['SimpleUser']
+    parent: Optional['Repository']
+    source: Optional['Repository']
+    forks: int
+    master_branch: Optional['str']
+    open_issues: int
+    watchers: int
+    anonymous_access_enabled: Optional['bool']
+    code_of_conduct: Optional['CodeOfConduct']
+    security_and_analysis: Optional['SecurityAndAnalysis']
+
+    @staticmethod
+    def _parse(repo: dict) -> Optional['FullRepository']:
+        if repo is None or not len(repo):
+            return None
+
+        return FullRepository(
+            id=repo.get('id', None),
+            node_id=repo.get('node_id', None),
+            name=repo.get('name', None),
+            full_name=repo.get('full_name', None),
+            owner=SimpleUser._parse(repo.get('owner', None)),
+            private=repo.get('private', None),
+            html_url=repo.get('html_url', None),
+            description=repo.get('description', None),
+            fork=repo.get('fork', None),
+            url=repo.get('url', None),
+            archive_url=repo.get('archive_url', None),
+            assignees_url=repo.get('assignees_url', None),
+            blobs_urls=repo.get('blobs_urls', None),
+            branches_url=repo.get('branches_url', None),
+            collaborators_url=repo.get('collaborators_url', None),
+            comments_url=repo.get('comments_url', None),
+            commits_url=repo.get('commits_url', None),
+            compare_url=repo.get('compare_url', None),
+            contents_url=repo.get('contents_url', None),
+            contributors_url=repo.get('contributors_url', None),
+            deployments_url=repo.get('deployments_url', None),
+            downloads_url=repo.get('downloads_url', None),
+            events_url=repo.get('events_url', None),
+            forks_url=repo.get('forks_url', None),
+            git_commits_url=repo.get('git_commits_url', None),
+            git_refs_url=repo.get('git_refs_url', None),
+            git_tags_url=repo.get('git_tags_url', None),
+            git_url=repo.get('git_url', None),
+            issue_comment_url=repo.get('issue_comment_url', None),
+            issue_events_url=repo.get('issue_events_url', None),
+            issues_url=repo.get('issues_url', None),
+            keys_url=repo.get('keys_url', None),
+            labels_url=repo.get('labels_url', None),
+            languages_url=repo.get('languages_url', None),
+            merges_url=repo.get('merges_url', None),
+            milestones_url=repo.get('milestones_url', None),
+            notifications_url=repo.get('notifications_url', None),
+            pulls_url=repo.get('pulls_url', None),
+            releases_url=repo.get('releases_url', None),
+            ssh_url=repo.get('ssh_url', None),
+            stargazers_url=repo.get('stargazers_url', None),
+            statuses_url=repo.get('statuses_url', None),
+            subscribers_url=repo.get('subscribers_url', None),
+            subscription_url=repo.get('subscription_url', None),
+            tags_url=repo.get('tags_url', None),
+            teams_url=repo.get('teams_url', None),
+            trees_url=repo.get('trees_url', None),
+            clone_url=repo.get('clone_url', None),
+            mirror_url=repo.get('mirror_url', None),
+            hooks_url=repo.get('hooks_url', None),
+            svn_url=repo.get('svn_url', None),
+            homepage=repo.get('homepage', None),
+            language=repo.get('language', None),
+            forks_count=repo.get('forks_count', None),
+            stargazers_count=repo.get('stargazers_count', None),
+            watchers_count=repo.get('watchers_count', None),
+            size=repo.get('size', None),
+            default_branch=repo.get('default_branch', None),
+            open_issues_count=repo.get('open_issues_count', None),
+            is_template=repo.get('is_template', None),
+            topics=repo.get('topics', None),
+            has_issues=repo.get('has_issues', None),
+            has_projects=repo.get('has_projects', None),
+            has_wiki=repo.get('has_wiki', None),
+            has_pages=repo.get('has_pages', None),
+            has_downloads=repo.get('has_downloads', None),
+            archived=repo.get('archived', None),
+            disabled=repo.get('disabled', None),
+            visibility=repo.get('visibility', None),
+            pushed_at=repo.get('pushed_at', None),
+            created_at=repo.get('created_at', None),
+            updated_at=repo.get('updated_at', None),
+            permissions=RepoPermissions._parse(repo.get('permissions', None)),
+            allow_rebase_merge=repo.get('allow_rebase_merge', None),
+            template_repository=Repository._parse(repo.get('template_repository', None)),
+            temp_clone_token=repo.get('temp_clone_token', None),
+            allow_squash_merge=repo.get('allow_squash_merge', None),
+            allow_auto_merge=repo.get('allow_auto_merge', None),
+            delete_branch_on_merge=repo.get('delete_branch_on_merge', None),
+            allow_merge_commit=repo.get('allow_merge_commit', None),
+            allow_forking=repo.get('allow_forking', None),
+            subscribers_count=repo.get('subscribers_count', None),
+            network_count=repo.get('network_count', None),
+            license=SimpleLicense._parse(repo.get('license', None)),
+            organization=SimpleUser._parse(repo.get('organization', None)),
+            parent=Repository._parse(repo.get('parent', None)),
+            source=Repository._parse(repo.get('source', None)),
+            forks=repo.get('forks', None),
+            master_branch=repo.get('master_branch', None),
+            open_issues=repo.get('open_issues', None),
+            watchers=repo.get('watchers', None),
+            anonymous_access_enabled=repo.get('anonymous_access_enabled', None),
+            code_of_conduct=CodeOfConduct._parse(repo.get('code_of_conduct', None)),
+            security_and_analysis=SecurityAndAnalysis._parse(repo.get('security_and_analysis', None)),
+        )
+
+
+@dataclass
+class SecurityAndAnalysis(Object):
+    advanced_security: Optional['AdvancedSecurity']
+    secret_scanning: Optional['SecretScanning']
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['SecurityAndAnalysis']:
+        if obj is None or not len(obj):
+            return None
+
+        return SecurityAndAnalysis(
+            advanced_security=AdvancedSecurity._parse(obj.get('advanced_security', None)),
+            secret_scanning=SecretScanning._parse(obj.get('secret_scanning', None)),
+        )
+
+
+@dataclass
+class AdvancedSecurity(Object):
+    enabled: bool
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['AdvancedSecurity']:
+        if obj is None or not len(obj):
+            return None
+        return AdvancedSecurity(
+            enabled=True if obj.get('status', None) == 'enabled' else False,
+        )
+
+
+@dataclass
+class SecretScanning(Object):
+    enabled: bool
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['SecretScanning']:
+        if obj is None or not len(obj):
+            return None
+        return SecretScanning(
+            enabled=True if obj.get('status', None) == 'enabled' else False,
         )
