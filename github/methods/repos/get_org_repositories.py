@@ -1,7 +1,7 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from github.scaffold import Scaffold
-from github.types import Repository
+from github.types import Repository, Response
 
 
 class GetOrgRepositories(Scaffold):
@@ -18,7 +18,7 @@ class GetOrgRepositories(Scaffold):
             direction: str = 'desc',
             per_page: int = 100,
             page: int = None,
-    ) -> Optional[List['Repository']]:
+    ) -> Tuple[bool, Union[List['Repository'], 'Response']]:
         """
         Lists repositories for the specified organization.
 
@@ -47,7 +47,7 @@ class GetOrgRepositories(Scaffold):
             Page number of the results to fetch.
             Default: "1"
 
-        :return: List[`types.Repository`]
+        :return: Tuple[bool, Union[List['Repository'], 'Response']]
         """
         response = self.get_with_token(
             url=f'https://api.github.com/orgs/{organization}/repos',
@@ -61,10 +61,16 @@ class GetOrgRepositories(Scaffold):
         )
 
         repos: List[Repository] = []
-        if response.ok:
+        if response.status_code == 200:
             for repo_dict in response.json():
                 repo = Repository._parse(repo_dict)
                 if repo_dict is not None and len(repo_dict):
                     repos.append(repo)
-
-        return repos
+            return True, repos
+        elif response.status_code == 404:
+            return False, Response._parse(404)
+        else:
+            return False, Response._parse_unknown(
+                status_code=response.status_code,
+                message=response.json().get('message'),
+            )

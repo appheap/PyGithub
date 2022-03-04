@@ -98,4 +98,7 @@ class GetMyRepositories(Scaffold):
         elif response.status_code == 401:
             return False, Response._parse(401)
 
-        return False, Response._parse()
+        return False, Response._parse_unknown(
+                status_code=response.status_code,
+                message=response.json().get('message'),
+            )

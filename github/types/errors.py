@@ -6,8 +6,9 @@ RESPONSES = {
     -1: 'Unknown Error',
     422: 'Validation failed',
     304: 'Not modified',
-    403: 'Forbidden',
     401: 'Requires authentication',
+    403: 'Forbidden',
+    404: 'Not Found',
     1: 'Resource not found',
     2: 'Validation failed',
     3: 'Bad Request',
@@ -35,3 +36,10 @@ class Response(Object):
                 code=-1,
                 description=RESPONSES[-1]
             )
+
+    @staticmethod
+    def _parse_unknown(status_code: int, message: str) -> 'Response':
+        return Response(
+            code=status_code,
+            description=message
+        )
