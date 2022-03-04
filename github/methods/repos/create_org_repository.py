@@ -1,7 +1,7 @@
 from typing import Optional, Tuple, Union
 
 from github.scaffold import Scaffold
-from github.types import Repository, GithubResponse
+from github.types import Repository, Response
 
 
 class CreateOrgRepository(Scaffold):
@@ -31,7 +31,7 @@ class CreateOrgRepository(Scaffold):
             allow_rebase_merge: bool = True,
             allow_auto_merge: bool = False,
             delete_branch_on_merge: bool = False,
-    ) -> Optional[Tuple['bool', Optional[Union['GithubResponse', 'Repository']]]]:
+    ) -> Tuple['bool', Union['Response', 'Repository']]:
         """
         Creates a new repository in the specified organization. The authenticated user must be a member of the organization.
 
@@ -130,15 +130,11 @@ class CreateOrgRepository(Scaffold):
             }
         )
 
-        if response.ok:
-            if response.status_code == 201:
-                return True, Repository._parse(response.json())
-            else:
-                return False, GithubResponse._parse(response.json())
-
+        if response.status_code == 201:
+            return True, Repository._parse(response.json())
         elif response.status_code == 403:  # Status: 403 Forbidden
-            return False, GithubResponse._parse(response.json())
+            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
         elif response.status_code == 422:  # Status: 422 Unprocessable Entity
-            return False, GithubResponse._parse(response.json())
+            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
         else:
-            return False, None
+            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))

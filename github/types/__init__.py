@@ -5,10 +5,8 @@ from .list import List
 from .object import Object
 from .repo_permissions import RepoPermissions
 from .repository import Repository
-from .github_error import GithubError
-from .github_response import GithubResponse
 from .user import SimpleUser
-from .errors import RESPONSES, Response
+from .errors import RESPONSES, Response, GithubError
 
 __all__ = [
     'GithubObject',
@@ -19,7 +17,6 @@ __all__ = [
     'RepoPermissions',
     'Repository',
     'GithubError',
-    'GithubResponse',
     'RESPONSES',
     'Response',
 

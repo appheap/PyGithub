@@ -90,15 +90,12 @@ class GetMyRepositories(Scaffold):
                     repos.append(repo)
             return True, repos
         elif response.status_code == 422:
-            return False, Response._parse(422)
+            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
         elif response.status_code == 304:
-            return False, Response._parse(304)
+            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
         elif response.status_code == 403:
-            return False, Response._parse(403)
+            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
         elif response.status_code == 401:
-            return False, Response._parse(401)
+            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
 
-        return False, Response._parse_unknown(
-                status_code=response.status_code,
-                message=response.json().get('message'),
-            )
+        return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))

@@ -65,7 +65,4 @@ class GetUserRepositories(Scaffold):
                     repos.append(repo)
             return True, repos
         else:
-            return False, Response._parse_unknown(
-                status_code=response.status_code,
-                message=response.json().get('message'),
-            )
+            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
