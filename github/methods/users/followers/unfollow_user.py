@@ -25,7 +25,7 @@ class UnfollowUser(Scaffold):
 
         :return: Tuple['bool', Union['bool', 'Response']]
         """
-        response = self.get_with_token(
+        response = self.delete_with_token(
             url=f'https://api.github.com/user/following/{username}',
         )
         if response.status_code in (204, 304):

@@ -29,6 +29,20 @@ class Scaffold:
     ) -> 'requests.Response':
         pass
 
+    def put_with_token(
+            self,
+            *,
+            url: str,
+    ) -> 'requests.Response':
+        pass
+
+    def delete_with_token(
+            self,
+            *,
+            url: str,
+    ) -> 'requests.Response':
+        pass
+
     def get_authenticated_user_info(
             self,
     ) -> Tuple[bool, Union[Tuple[Optional['GithubObject'], Optional['Headers']], 'Response']]:
