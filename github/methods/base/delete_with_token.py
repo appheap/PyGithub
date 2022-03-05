@@ -1,6 +1,6 @@
-from github.scaffold import Scaffold
 import requests
-import json
+
+from github.scaffold import Scaffold
 
 
 class DeleteWithToken(Scaffold):
