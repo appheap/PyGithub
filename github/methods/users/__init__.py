@@ -1,6 +1,6 @@
-from .get_my_info import GetMyInfo
+from .get_authenticated_user_info import GetAuthenticatedUserInfo
 
 class Users(
-    GetMyInfo,
+    GetAuthenticatedUserInfo,
 ):
     pass

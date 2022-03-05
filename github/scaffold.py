@@ -1,7 +1,8 @@
-from typing import Optional
+from typing import Optional, Tuple, Union
 
 import requests
 from github import types
+from github.types import GithubObject, Headers, Response
 
 
 class Scaffold:
@@ -26,4 +27,9 @@ class Scaffold:
             url: str,
             data: dict = None,
     ) -> 'requests.Response':
+        pass
+
+    def get_authenticated_user_info(
+            self,
+    ) -> Tuple[bool, Union[Tuple[Optional['GithubObject'], Optional['Headers']], 'Response']]:
         pass

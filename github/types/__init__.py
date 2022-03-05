@@ -5,7 +5,7 @@ from .list import List
 from .object import Object
 from .repo_permissions import RepoPermissions
 from .repository import Repository, FullRepository, AdvancedSecurity, SecurityAndAnalysis, SecretScanning, CodeOfConduct
-from .user import SimpleUser
+from .user import SimpleUser, PrivateUser, PublicUser
 from .errors import RESPONSES, Response, GithubError
 
 __all__ = [
@@ -21,8 +21,11 @@ __all__ = [
     'SecretScanning',
     'CodeOfConduct',
     'AdvancedSecurity',
-    'GithubError',
+    'SimpleUser',
+    'PrivateUser',
+    'PublicUser',
     'RESPONSES',
     'Response',
+    'GithubError',
 
 ]
