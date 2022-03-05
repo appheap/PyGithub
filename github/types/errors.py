@@ -5,6 +5,7 @@ from .object import Object
 
 RESPONSES = {
     -1: 'Unknown Error',
+    204: 'No Content',
     301: 'Moved permanently',
     422: 'Validation failed',
     304: 'Not modified',
