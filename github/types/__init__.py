@@ -4,9 +4,11 @@ from .license import SimpleLicense
 from .list import List
 from .object import Object
 from .repo_permissions import RepoPermissions
-from .repository import Repository, FullRepository, AdvancedSecurity, SecurityAndAnalysis, SecretScanning, CodeOfConduct
+from .repository import Repository, MinimalRepository, FullRepository, AdvancedSecurity, SecurityAndAnalysis, \
+    SecretScanning, CodeOfConduct
 from .user import SimpleUser, PrivateUser, PublicUser
-from .errors import RESPONSES, Response, GithubError
+from .response import Response, STATUS_CODES_MAPPING
+from .github_error import GithubError
 
 __all__ = [
     'GithubObject',
@@ -16,6 +18,7 @@ __all__ = [
     'Object',
     'RepoPermissions',
     'Repository',
+    'MinimalRepository',
     'FullRepository',
     'SecurityAndAnalysis',
     'SecretScanning',
@@ -24,7 +27,7 @@ __all__ = [
     'SimpleUser',
     'PrivateUser',
     'PublicUser',
-    'RESPONSES',
+    'STATUS_CODES_MAPPING',
     'Response',
     'GithubError',
 
