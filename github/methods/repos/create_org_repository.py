@@ -1,5 +1,3 @@
-from typing import Optional, Tuple, Union
-
 from github.scaffold import Scaffold
 from github.types import Repository, Response
 
@@ -31,7 +29,7 @@ class CreateOrgRepository(Scaffold):
             allow_rebase_merge: bool = True,
             allow_auto_merge: bool = False,
             delete_branch_on_merge: bool = False,
-    ) -> Tuple['bool', Union['Response', 'Repository']]:
+    ) -> 'Response':
         """
         Creates a new repository in the specified organization. The authenticated user must be a member of the organization.
 
@@ -104,7 +102,7 @@ class CreateOrgRepository(Scaffold):
         :param delete_branch_on_merge:
             Either "true" to allow automatically deleting head branches when pull requests are merged, or "false" to prevent automatic deletion.
 
-        :return: #todo: add return docstring
+        :return: 'Response' #todo: add return docstring
         """
         response = self.post_with_token(
             url=f'https://api.github.com/orgs/{organization}/repos',
@@ -131,10 +129,18 @@ class CreateOrgRepository(Scaffold):
         )
 
         if response.status_code == 201:
-            return True, Repository._parse(response.json())
-        elif response.status_code == 403:  # Status: 403 Forbidden
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
-        elif response.status_code == 422:  # Status: 422 Unprocessable Entity
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=True,
+                result=Repository._parse(response.json())
+            )
+        elif response.status_code in (403, 422,):
+            return Response._parse(
+                response=response,
+                success=False,
+            )
         else:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )

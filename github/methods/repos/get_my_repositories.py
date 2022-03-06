@@ -1,8 +1,6 @@
-from typing import List, Optional, Union, Tuple
-
 from github.scaffold import Scaffold
-from github.types import Repository
 from github.types import Response
+from github.utils import utils
 
 
 class GetMyRepositories(Scaffold):
@@ -22,7 +20,7 @@ class GetMyRepositories(Scaffold):
             page: int = None,
             since: str = None,
             before: str = None,
-    ) -> Tuple[bool, Union[List['Repository'], 'Response']]:
+    ) -> 'Response':
         """
         Lists repositories that the authenticated user has explicit permission (:read, :write, or :admin) to access.
 
@@ -65,7 +63,7 @@ class GetMyRepositories(Scaffold):
         :param before:
             Only show notifications updated before the given time. This is a timestamp in `ISO 8601` format: `YYYY-MM-DDTHH:MM:SSZ`.
 
-        :return: Tuple[bool, Union[List['Repository'], 'Response']]
+        :return: 'Response'
         """
         response = self.get_with_token(
             url='https://api.github.com/user/repos',
@@ -82,20 +80,19 @@ class GetMyRepositories(Scaffold):
             }
         )
 
-        repos: List[Repository] = []
         if response.status_code == 200:
-            for repo_dict in response.json():
-                repo = Repository._parse(repo_dict)
-                if repo_dict is not None and len(repo_dict):
-                    repos.append(repo)
-            return True, repos
-        elif response.status_code == 422:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
-        elif response.status_code == 304:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
-        elif response.status_code == 403:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
-        elif response.status_code == 401:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
-
-        return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=True,
+                result=utils.parse_repositories(response.json()),
+            )
+        elif response.status_code in (304, 401, 403, 422,):
+            return Response._parse(
+                response=response,
+                success=False,
+            )
+        else:
+            return Response._parse(
+                response=response,
+                success=False,
+            )

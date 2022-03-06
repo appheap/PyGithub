@@ -1,7 +1,6 @@
-from typing import List, Optional, Union, Tuple
-
 from github.scaffold import Scaffold
-from github.types import Repository, Response
+from github.types import Response
+from github.utils import utils
 
 
 class GetOrgRepositories(Scaffold):
@@ -18,7 +17,7 @@ class GetOrgRepositories(Scaffold):
             direction: str = 'desc',
             per_page: int = 100,
             page: int = None,
-    ) -> Tuple[bool, Union[List['Repository'], 'Response']]:
+    ) -> 'Response':
         """
         Lists repositories for the specified organization.
 
@@ -47,7 +46,7 @@ class GetOrgRepositories(Scaffold):
             Page number of the results to fetch.
             Default: "1"
 
-        :return: Tuple[bool, Union[List['Repository'], 'Response']]
+        :return: 'Response'
         """
         response = self.get_with_token(
             url=f'https://api.github.com/orgs/{organization}/repos',
@@ -60,14 +59,19 @@ class GetOrgRepositories(Scaffold):
             }
         )
 
-        repos: List[Repository] = []
         if response.status_code == 200:
-            for repo_dict in response.json():
-                repo = Repository._parse(repo_dict)
-                if repo_dict is not None and len(repo_dict):
-                    repos.append(repo)
-            return True, repos
+            return Response._parse(
+                response=response,
+                success=True,
+                result=utils.parse_minimal_repositories(response.json()),
+            )
         elif response.status_code == 404:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )
         else:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )
