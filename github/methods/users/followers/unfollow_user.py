@@ -1,7 +1,5 @@
-from typing import Tuple, List, Union
-
 from github.scaffold import Scaffold
-from github.types import SimpleUser, Response
+from github.types import Response
 
 
 class UnfollowUser(Scaffold):
@@ -13,7 +11,7 @@ class UnfollowUser(Scaffold):
             self,
             *,
             username: str,
-    ) -> Tuple['bool', Union['bool', 'Response']]:
+    ) -> 'Response':
         """
         Unfollow a user
 
@@ -23,16 +21,26 @@ class UnfollowUser(Scaffold):
         :param username: Username of the user to be unfollowed
 
 
-        :return: Tuple['bool', Union['bool', 'Response']]
+        :return: 'Response'
         """
         response = self.delete_with_token(
             url=f'https://api.github.com/user/following/{username}',
         )
         if response.status_code in (204, 304):
             # Status: 204 No Content
-            # Status: 304 Not Modified => the person is already followed by the authenticated user
-            return True, True
+            # Status: 304 Not Modified => the person is already unfollowed by the authenticated user
+            return Response._parse(
+                response=response,
+                success=True,
+                description='the person is already unfollowed by the authenticated user',
+            )
         elif response.status_code in (404, 403, 401):
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )
         else:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )

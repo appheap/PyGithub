@@ -1,7 +1,5 @@
-from typing import Tuple, List, Union
-
 from github.scaffold import Scaffold
-from github.types import SimpleUser, Response
+from github.types import Response
 
 
 class FollowUser(Scaffold):
@@ -13,7 +11,7 @@ class FollowUser(Scaffold):
             self,
             *,
             username: str,
-    ) -> Tuple['bool', Union['bool', 'Response']]:
+    ) -> 'Response':
         """
         Follow a user
 
@@ -23,7 +21,7 @@ class FollowUser(Scaffold):
         :param username: Username of the user to be followed
 
 
-        :return: Tuple['bool', Union['bool', 'Response']]
+        :return: 'Response'
         """
         response = self.put_with_token(
             url=f'https://api.github.com/user/following/{username}',
@@ -31,8 +29,18 @@ class FollowUser(Scaffold):
         if response.status_code in (204, 304):
             # Status: 204 No Content
             # Status: 304 Not Modified => the person is already followed by the authenticated user
-            return True, True
+            return Response._parse(
+                response=response,
+                success=True,
+                description='the person is already followed by the authenticated user' if response.status_code == 304 else None,
+            )
         elif response.status_code in (404, 403, 401):
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )
         else:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )

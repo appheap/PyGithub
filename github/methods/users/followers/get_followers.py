@@ -1,7 +1,6 @@
-from typing import Tuple, List, Union
-
 from github.scaffold import Scaffold
-from github.types import SimpleUser, Response
+from github.types import Response
+from github.utils import utils
 
 
 class GetFollowers(Scaffold):
@@ -14,7 +13,7 @@ class GetFollowers(Scaffold):
             *,
             per_page: int = 100,
             page: int = 1
-    ) -> Tuple['bool', Union[List['SimpleUser'], 'Response']]:
+    ) -> 'Response':
         """
         Lists the people following the authenticated user.
 
@@ -23,7 +22,7 @@ class GetFollowers(Scaffold):
 
         :param page: Page number of the results to fetch. Default: 1
 
-        :return: Tuple['bool', Union[List['SimpleUser'], 'Response']]
+        :return: 'Response'
         """
         response = self.get_with_token(
             url=f'https://api.github.com/user/followers',
@@ -33,13 +32,18 @@ class GetFollowers(Scaffold):
             }
         )
         if response.status_code == 200:
-            users = []
-            for user_dict in response.json():
-                user = SimpleUser._parse(user_dict)
-                if user_dict is not None and len(user_dict):
-                    users.append(user)
-            return True, users
+            return Response._parse(
+                response=response,
+                success=True,
+                result=utils.parse_simple_users(response.json()),
+            )
         elif response.status_code in (304, 403, 401):
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )
         else:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )

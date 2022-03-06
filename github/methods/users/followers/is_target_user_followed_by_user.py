@@ -1,5 +1,3 @@
-from typing import Tuple, Union
-
 from github.scaffold import Scaffold
 from github.types import Response
 
@@ -14,7 +12,7 @@ class IsTargetUserFollowedByUser(Scaffold):
             *,
             username: str,
             target_user: str,
-    ) -> Tuple['bool', Union['bool', 'Response']]:
+    ) -> 'Response':
         """
         Check if a user follows another user
 
@@ -23,16 +21,29 @@ class IsTargetUserFollowedByUser(Scaffold):
         :param target_user: Username of the target to be checked
 
 
-        :return: Tuple['bool', Union['bool', 'Response']]
+        :return: 'Response'
         """
         response = self.get_with_token(
             url=f'https://api.github.com/users/{username}/following/{target_user}',
         )
         if response.status_code == 204:
             # Status: 204 No Content => the user follows the target user
-            return True, True
+            return Response._parse(
+                response=response,
+                success=True,
+                result=True,
+                description='the user follows the target user'
+            )
         elif response.status_code == 404:
             # Status: 404 Not Found => the user does not follow the target user
-            return True, False
+            return Response._parse(
+                response=response,
+                success=True,
+                result=False,
+                description='the user does not follow the target user'
+            )
         else:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )
