@@ -1,7 +1,5 @@
-from typing import Optional, Tuple, Union
-
 from github.scaffold import Scaffold
-from github.types import GithubObject, Headers, Response, PublicUser, PrivateUser
+from github.types import Headers, Response, PublicUser, PrivateUser
 
 
 class GetAuthenticatedUserInfo(Scaffold):
@@ -11,13 +9,13 @@ class GetAuthenticatedUserInfo(Scaffold):
 
     def get_authenticated_user_info(
             self,
-    ) -> Tuple[bool, Union[Tuple[Union['PublicUser', 'PrivateUser'], Optional['Headers']], 'Response']]:
+    ) -> 'Response':
         """
         If the authenticated user is authenticated through basic authentication or OAuth with the user scope, then the response lists public and private profile information.
 
         If the authenticated user is authenticated through OAuth without the user scope, then the response lists only public profile information.
 
-        :return: Tuple[bool, Union[Tuple[Optional['GithubObject'], Optional['Headers']], 'Response']]
+        :return: 'Response'
         """
         response = self.get_with_token(url=f'https://api.github.com/user')
         if response.status_code == 200:
@@ -26,12 +24,18 @@ class GetAuthenticatedUserInfo(Scaffold):
                 else PublicUser._parse(json_res)
 
             headers = Headers._parse(dict(response.headers))
-            return True, (user, headers)
-        elif response.status_code == 304:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
-        elif response.status_code == 401:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
-        elif response.status_code == 404:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=True,
+                result=(user, headers)
+            )
+        elif response.status_code in (304, 401, 404,):
+            return Response._parse(
+                response=response,
+                success=False,
+            )
         else:
-            return False, Response._parse(response.status_code, response.json(), getattr(response, 'message', None))
+            return Response._parse(
+                response=response,
+                success=False,
+            )
