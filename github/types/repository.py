@@ -610,6 +610,24 @@ class MinimalRepository(Object):
 
 
 @dataclass
+class Repo(Object):
+    id: int
+    name: str
+    url: str
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['Repo']:
+        if obj is None or not len(obj):
+            return None
+
+        return Repo(
+            id=obj.get('id', None),
+            name=obj.get('name', None),
+            url=obj.get('url', None),
+        )
+
+
+@dataclass
 class SecurityAndAnalysis(Object):
     advanced_security: Optional['AdvancedSecurity']
     secret_scanning: Optional['SecretScanning']

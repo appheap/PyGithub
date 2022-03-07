@@ -17,6 +17,7 @@ STATUS_CODES_MAPPING = {
     404: 'Not Found',
     415: 'Preview header missing',
     422: 'Validation failed',
+    503: 'Service unavailable',
     1: 'Resource not found',
     2: 'Validation failed',
     3: 'Bad Request',
@@ -45,7 +46,10 @@ class Response(Object):
             description: Optional['str'] = None,
             result: Optional[Union['object', 'Object', List['Object'], Container[Union['Object', 'object']]]] = None,
     ):
-        response_dict = response.json()
+        try:
+            response_dict = response.json()
+        except Exception as e:
+            response_dict = None
         errors_dict = response_dict.get('errors', None) if type(response_dict) == dict else None
 
         errors = []
