@@ -5,16 +5,16 @@ import requests
 from github.scaffold import Scaffold
 
 
-class DeleteWithToken(Scaffold):
-    def delete_with_token(
+class PatchWithToken(Scaffold):
+    def patch_with_token(
             self,
             *,
             url: str,
             data: dict = None,
     ) -> 'requests.Response':
-        response = requests.delete(
+        response = requests.patch(
             url,
             headers=self._headers,
-            data=json.dumps(data) if data else None
+            data=json.dumps(data)
         )
         return response

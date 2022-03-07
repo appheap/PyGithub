@@ -40,6 +40,15 @@ class Scaffold:
             self,
             *,
             url: str,
+            data: dict = None,
+    ) -> 'requests.Response':
+        pass
+
+    def patch_with_token(
+            self,
+            *,
+            url: str,
+            data: dict = None,
     ) -> 'requests.Response':
         pass
 
