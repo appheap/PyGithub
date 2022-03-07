@@ -1,0 +1,6 @@
+
+
+class Custom(
+
+):
+    pass

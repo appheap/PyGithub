@@ -1,0 +1,6 @@
+
+
+class Starring(
+
+):
+    pass

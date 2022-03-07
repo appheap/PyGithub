@@ -1,0 +1,6 @@
+
+
+class Search(
+
+):
+    pass
