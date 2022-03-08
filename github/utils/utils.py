@@ -1,6 +1,5 @@
 from typing import Optional, Union, List
 
-# from github.types import SimpleUser, List, Repository, MinimalRepository, Email, Page, Event, Label
 from github import types
 
 
