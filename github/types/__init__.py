@@ -18,7 +18,7 @@ from .pull_request import PullRequest
 from .reaction_rollup import ReactionRollup
 from .repo_permissions import RepoPermissions
 from .repository import Repository, MinimalRepository, FullRepository, AdvancedSecurity, SecurityAndAnalysis, \
-    SecretScanning, CodeOfConduct, Repo
+    SecretScanning, CodeOfConduct, Repo, RepositorySubscription
 from .response import Response, STATUS_CODES_MAPPING
 from .user import SimpleUser, PrivateUser, PublicUser
 from .stargazer import Stargazer
@@ -36,6 +36,8 @@ __all__ = [
     'SecretScanning',
     'CodeOfConduct',
     'AdvancedSecurity',
+    'Repo',
+    'RepositorySubscription',
     'SimpleUser',
     'PrivateUser',
     'PublicUser',

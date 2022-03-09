@@ -27,6 +27,18 @@ def parse_repositories(repos_dict: list) -> Optional[List['types.Repository']]:
     return repos
 
 
+def parse_repository_subscription(repos_dict: list) -> Optional[List['types.RepositorySubscription']]:
+    if type(repos_dict) != list:
+        return []
+
+    repos: List['types.RepositorySubscription'] = []
+    for repo_dict in repos_dict:
+        repo = types.RepositorySubscription._parse(repo_dict)
+        if repo_dict is not None and len(repo_dict):
+            repos.append(repo)
+    return repos
+
+
 def parse_repositories_with_starred_at(repos_dict: list) -> Optional[List['types.Repository']]:
     if type(repos_dict) != list:
         return []

@@ -37,6 +37,8 @@ class Scaffold:
             self,
             *,
             url: str,
+            data: dict = None,
+            params: dict = None,
     ) -> 'requests.Response':
         pass
 

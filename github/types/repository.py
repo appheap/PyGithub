@@ -667,3 +667,30 @@ class SecretScanning(Object):
         return SecretScanning(
             enabled=True if obj.get('status', None) == 'enabled' else False,
         )
+
+
+@dataclass
+class RepositorySubscription(Object):
+    """
+    Repository invitations let you manage who you collaborate with.
+    """
+    subscribed: Optional['bool']
+    ignored: Optional['bool']
+    reason: Optional['str']
+    created_at: Optional['str']
+    url: Optional['str']
+    repository_url: Optional['str']
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['RepositorySubscription']:
+        if obj is None or not len(obj):
+            return None
+
+        return RepositorySubscription(
+            subscribed=obj.get('subscribed', None),
+            ignored=obj.get('ignored', None),
+            reason=obj.get('reason', None),
+            created_at=obj.get('created_at', None),
+            url=obj.get('url', None),
+            repository_url=obj.get('repository_url', None),
+        )
