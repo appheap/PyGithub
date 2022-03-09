@@ -9,5 +9,5 @@ class PostWithToken(Scaffold):
             url: str,
             data: dict = None,
     ) -> 'requests.Response':
-        response = requests.post(url, headers=self._headers, data=json.dumps(data))
+        response = requests.post(url, headers=self._default_headers, data=json.dumps(data))
         return response

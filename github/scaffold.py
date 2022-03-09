@@ -1,14 +1,17 @@
-from typing import Optional, Tuple, Union
+from typing import Optional
 
 import requests
+
 from github import types
-from github.types import GithubObject, Headers, Response
+from github.types import Response
 
 
 class Scaffold:
-    user: Optional['types.GithubObject']
+    user: Optional['types.PrivateUser']
     headers: Optional['types.Headers']
     _is_authenticated: bool
+    _default_headers: dict
+    _default_params: dict
 
     def __init__(self):
         pass
@@ -54,5 +57,5 @@ class Scaffold:
 
     def get_authenticated_user_info(
             self,
-    ) -> Tuple[bool, Union[Tuple[Optional['GithubObject'], Optional['Headers']], 'Response']]:
+    ) -> 'Response':
         pass

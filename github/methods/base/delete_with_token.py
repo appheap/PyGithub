@@ -14,7 +14,7 @@ class DeleteWithToken(Scaffold):
     ) -> 'requests.Response':
         response = requests.delete(
             url,
-            headers=self._headers,
+            headers=self._default_headers,
             data=json.dumps(data) if data else None
         )
         return response

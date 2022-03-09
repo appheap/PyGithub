@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from github.types import Object
+from .object import Object
 
 
 @dataclass

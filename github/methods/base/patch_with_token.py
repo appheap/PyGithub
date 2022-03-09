@@ -14,7 +14,7 @@ class PatchWithToken(Scaffold):
     ) -> 'requests.Response':
         response = requests.patch(
             url,
-            headers=self._headers,
+            headers=self._default_headers,
             data=json.dumps(data)
         )
         return response

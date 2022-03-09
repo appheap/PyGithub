@@ -12,7 +12,7 @@ class PutWithToken(Scaffold):
         response = requests.put(
             url,
             headers={
-                **self._headers,
+                **self._default_headers,
                 'Content-Length': "0",
             },
         )

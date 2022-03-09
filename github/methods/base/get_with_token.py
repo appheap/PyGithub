@@ -14,5 +14,5 @@ class GetWithToken(Scaffold):
             **params
         } if params and len(params) else self._default_params
 
-        response = requests.get(url, headers=self._headers, params=params)
+        response = requests.get(url, headers=self._default_headers, params=params)
         return response
