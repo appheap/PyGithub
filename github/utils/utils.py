@@ -27,6 +27,20 @@ def parse_repositories(repos_dict: list) -> Optional[List['types.Repository']]:
     return repos
 
 
+def parse_repositories_with_starred_at(repos_dict: list) -> Optional[List['types.Repository']]:
+    if type(repos_dict) != list:
+        return []
+
+    repos: List['types.Repository'] = []
+    for res in repos_dict:
+        _repo = res.get('repo')
+        _repo['starred_at'] = res.get('starred_at', None)
+        repo = types.Repository._parse(_repo)
+        if _repo is not None and len(_repo):
+            repos.append(repo)
+    return repos
+
+
 def parse_minimal_repositories(repos_dict: list) -> Optional[List['types.MinimalRepository']]:
     if type(repos_dict) != list:
         return []
