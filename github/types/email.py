@@ -12,7 +12,7 @@ class Email(Object):
     visibility: Optional['str']
 
     @staticmethod
-    def _parse(obj: dict):
+    def _parse(obj: dict) -> Optional['Email']:
         if obj is None or not len(obj):
             return None
 

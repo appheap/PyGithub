@@ -32,6 +32,7 @@ STATUS_CODES_MAPPING = {
 class Response(Object):
     success: bool
     status_code: int
+    reason: Optional['str']
     message: Optional['str']
     errors: Optional[List['GithubError']]
 
@@ -67,6 +68,7 @@ class Response(Object):
                 return Response(
                     status_code=status_code,
                     message=STATUS_CODES_MAPPING[status_code],
+                    reason=response.reason,
                     errors=errors if len(errors) else None,
 
                     result=result,
@@ -77,6 +79,7 @@ class Response(Object):
                 return Response(
                     status_code=status_code,
                     message=message,
+                    reason=response.reason,
                     errors=errors if len(errors) else None,
 
                     result=result,
@@ -88,6 +91,7 @@ class Response(Object):
                 return Response(
                     status_code=status_code,
                     message=STATUS_CODES_MAPPING[status_code],
+                    reason=response.reason,
                     errors=errors if len(errors) else None,
 
                     result=result,
@@ -98,6 +102,7 @@ class Response(Object):
                 return Response(
                     status_code=-1,
                     message=STATUS_CODES_MAPPING[-1],
+                    reason=response.reason,
                     errors=errors if len(errors) else None,
 
                     result=result,

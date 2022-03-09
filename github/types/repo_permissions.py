@@ -13,7 +13,7 @@ class RepoPermissions(Object):
     maintain: Optional['bool']
 
     @staticmethod
-    def _parse(permissions: dict):
+    def _parse(permissions: dict) -> Optional['RepoPermissions']:
         if permissions is None or not len(permissions):
             return None
 

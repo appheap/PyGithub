@@ -1,70 +1,42 @@
+from dataclasses import dataclass
 from typing import Optional
 
 from .object import Object
 
 
+@dataclass
 class Headers(Object):
-    def __init__(
-            self,
-            *,
-            allow_control_allow_origin: Optional['str'] = None,
-            access_control_expose_headers: Optional['str'] = None,
-            cache_control: Optional['str'] = None,
-            content_encoding: Optional['str'] = None,
-            content_security_policy: Optional['str'] = None,
-            content_type: Optional['str'] = None,
-            date: Optional['str'] = None,
-            etag: Optional['str'] = None,
-            last_modified: Optional['str'] = None,
-            referrer_policy: Optional['str'] = None,
-            server: Optional['str'] = None,
-            strict_transport_security: Optional['str'] = None,
-            transfer_encoding: Optional['str'] = None,
-            vary: Optional['str'] = None,
-            x_accepted_oauth_scopes: Optional['str'] = None,
-            x_content_type_options: Optional['str'] = None,
-            x_frame_options: Optional['str'] = None,
-            x_github_media_type: Optional['str'] = None,
-            x_github_request_id: Optional['str'] = None,
-            x_oauth_scopes: Optional['str'] = None,
-            x_ratelimit_limit: Optional['int'] = None,
-            x_ratelimit_remaining: Optional['int'] = None,
-            x_ratelimit_reset: Optional['int'] = None,
-            x_ratelimit_resource: Optional['str'] = None,
-            x_ratelimit_used: Optional['int'] = None,
-            x_xss_protection: Optional['str'] = None,
-    ) -> None:
-        self.allow_control_allow_origin = allow_control_allow_origin
-        self.access_control_expose_headers = access_control_expose_headers
-        self.cache_control = cache_control
-        self.content_encoding = content_encoding
-        self.content_security_policy = content_security_policy
-        self.content_type = content_type
-        self.date = date
-        self.etag = etag
-        self.last_modified = last_modified
-        self.referrer_policy = referrer_policy
-        self.server = server
-        self.strict_transport_security = strict_transport_security
-        self.transfer_encoding = transfer_encoding
-        self.vary = vary
-        self.x_accepted_oauth_scopes = x_accepted_oauth_scopes
-        self.x_content_type_options = x_content_type_options
-        self.x_frame_options = x_frame_options
-        self.x_github_media_type = x_github_media_type
-        self.x_github_request_id = x_github_request_id
-        self.x_oauth_scopes = x_oauth_scopes
-        self.x_ratelimit_limit = x_ratelimit_limit
-        self.x_ratelimit_remaining = x_ratelimit_remaining
-        self.x_ratelimit_reset = x_ratelimit_reset
-        self.x_ratelimit_resource = x_ratelimit_resource
-        self.x_ratelimit_used = x_ratelimit_used
-        self.x_xss_protection = x_xss_protection
+    allow_control_allow_origin: Optional['str']
+    access_control_expose_headers: Optional['str']
+    cache_control: Optional['str']
+    content_encoding: Optional['str']
+    content_security_policy: Optional['str']
+    content_type: Optional['str']
+    date: Optional['str']
+    etag: Optional['str']
+    last_modified: Optional['str']
+    referrer_policy: Optional['str']
+    server: Optional['str']
+    strict_transport_security: Optional['str']
+    transfer_encoding: Optional['str']
+    vary: Optional['str']
+    x_accepted_oauth_scopes: Optional['str']
+    x_content_type_options: Optional['str']
+    x_frame_options: Optional['str']
+    x_github_media_type: Optional['str']
+    x_github_request_id: Optional['str']
+    x_oauth_scopes: Optional['str']
+    x_ratelimit_limit: Optional['int']
+    x_ratelimit_remaining: Optional['int']
+    x_ratelimit_reset: Optional['int']
+    x_ratelimit_resource: Optional['str']
+    x_ratelimit_used: Optional['int']
+    x_xss_protection: Optional['str']
 
     @staticmethod
-    def _parse(headers: dict):
+    def _parse(headers: dict) -> Optional['Headers']:
         if headers is None or not len(headers):
-            return
+            return None
 
         return Headers(
             allow_control_allow_origin=headers.get('Access-Control-Allow-Origin', None),
