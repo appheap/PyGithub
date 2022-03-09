@@ -3,12 +3,12 @@ from github.types import Response
 from github.utils import utils
 
 
-class ListStargazers(Scaffold):
+class ListRepositoryStargazers(Scaffold):
     """
     List organization events for the authenticated user
     """
 
-    def list_stargazers(
+    def list_repository_stargazers(
             self,
             *,
             owner: str,

@@ -1,8 +1,8 @@
-from .list_stargazers import ListStargazers
+from .list_repository_stargazers import ListRepositoryStargazers
 
 
 class Starring(
-    ListStargazers,
+    ListRepositoryStargazers,
 
 ):
     pass
