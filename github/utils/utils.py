@@ -88,3 +88,15 @@ def parse_events(events_dict: list) -> Optional[List['types.Event']]:
         if event_dict is not None and len(event_dict):
             events.append(event)
     return events
+
+
+def parse_stargazers(stargazers_list: list) -> Optional[List['types.Stargazer']]:
+    if type(stargazers_list) != list:
+        return []
+
+    stargazers: List['types.Stargazer'] = []
+    for stargazer_dict in stargazers_list:
+        stargazer = types.Stargazer._parse(stargazer_dict)
+        if stargazer_dict is not None and len(stargazer_dict):
+            stargazers.append(stargazer)
+    return stargazers

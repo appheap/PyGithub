@@ -21,6 +21,7 @@ class Scaffold:
             *,
             url: str,
             params: dict = None,
+            headers: dict = None,
     ) -> 'requests.Response':
         pass
 

@@ -21,6 +21,7 @@ from .repository import Repository, MinimalRepository, FullRepository, AdvancedS
     SecretScanning, CodeOfConduct, Repo
 from .response import Response, STATUS_CODES_MAPPING
 from .user import SimpleUser, PrivateUser, PublicUser
+from .stargazer import Stargazer
 
 __all__ = [
     'Headers',
@@ -53,5 +54,6 @@ __all__ = [
     'Integration',
     'Payload',
     'ReactionRollup',
+    'Stargazer',
 
 ]

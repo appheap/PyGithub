@@ -33,7 +33,7 @@ class GithubClient(Methods, Scaffold, Object):
 
         self._default_headers = {
             'Authorization': f'token {self.token}',
-            'Accept': 'application/vnd.github.v3+json',
+            'Accept': 'application/vnd.github.v3.full+json',
         }
         self._default_params = {
             'i': ''
