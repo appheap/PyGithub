@@ -1,5 +1,9 @@
 from typing import Optional, Union, List
 
+import requests
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
+
 from github import types
 
 
@@ -126,3 +130,16 @@ def parse_stargazers(stargazers_list: list) -> Optional[List['types.Stargazer']]
         if stargazer_dict is not None and len(stargazer_dict):
             stargazers.append(stargazer)
     return stargazers
+
+
+def parse_last_page(response: requests.Response) -> int:
+    try:
+        url = response.links.get('last').get('url')
+        parsed_url = urlparse(url)
+        captured_value = parse_qs(parsed_url.query)
+        last_page = int(captured_value.get('page')[0])
+        return last_page
+    except Exception as e:
+        pass
+
+    return -1
