@@ -24,7 +24,7 @@ from .user import SimpleUser, PrivateUser, PublicUser
 from .stargazer import Stargazer
 from .search import Match, SearchResultTextMatch, CodeSearchResultItem, SearchCodeResult, SearchRepositoriesResult, \
     RepoSearchResultItem, RelatedObject, AliasObject, TopicSearchResultItem, SearchTopicsResult, SearchUsersResult, \
-    UserSearchResultItem
+    UserSearchResultItem, LabelSearchResultItem, LabelSearchResult
 
 __all__ = [
     'Headers',
@@ -72,5 +72,7 @@ __all__ = [
     'SearchTopicsResult',
     'UserSearchResultItem',
     'SearchUsersResult',
+    'LabelSearchResult',
+    'LabelSearchResultItem',
 
 ]

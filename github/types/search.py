@@ -1,12 +1,11 @@
 from dataclasses import dataclass
 from typing import Optional, List
 
+from .license import SimpleLicense
 from .object import Object
+from .repo_permissions import RepoPermissions
 from .repository import MinimalRepository
 from .user import SimpleUser
-from .repo_permissions import RepoPermissions
-from .license import SimpleLicense
-from github.utils import utils
 
 
 @dataclass
@@ -606,6 +605,71 @@ class UserSearchResultItem(Object):
         results: List['UserSearchResultItem'] = []
         for result_dict in result_items:
             result = UserSearchResultItem._parse(result_dict)
+            if result_dict is not None and len(result_dict):
+                results.append(result)
+        return results
+
+
+######################################################################################
+
+@dataclass
+class LabelSearchResult(Object):
+    total_count: Optional['int']
+    incomplete_results: Optional['bool']
+    items: Optional[List['LabelSearchResultItem']]
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['LabelSearchResult']:
+        if obj is None or not len(obj):
+            return None
+
+        return LabelSearchResult(
+            total_count=obj.get('total_count', None),
+            incomplete_results=obj.get('incomplete_results', None),
+            items=LabelSearchResultItem._parse_list(obj.get('items', None)),
+        )
+
+
+@dataclass
+class LabelSearchResultItem(Object):
+    """
+    Label Search Result Item
+    """
+    id: Optional['int']
+    node_id: Optional['str']
+    url: Optional['str']
+    name: Optional['str']
+    color: Optional['str']
+    is_default: Optional['bool']
+    description: Optional['str']
+    score: Optional['float']
+    text_matches: Optional['SearchResultTextMatch']
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['LabelSearchResultItem']:
+        if obj is None or not len(obj):
+            return None
+
+        return LabelSearchResultItem(
+            id=obj.get('id', None),
+            node_id=obj.get('node_id', None),
+            url=obj.get('url', None),
+            name=obj.get('name', None),
+            color=obj.get('color', None),
+            is_default=obj.get('default', None),
+            description=obj.get('description', None),
+            score=obj.get('score', None),
+            text_matches=SearchResultTextMatch._parse(obj.get('text_matches', None)),
+        )
+
+    @staticmethod
+    def _parse_list(result_items: list) -> Optional[List['LabelSearchResultItem']]:
+        if type(result_items) != list:
+            return []
+
+        results: List['LabelSearchResultItem'] = []
+        for result_dict in result_items:
+            result = LabelSearchResultItem._parse(result_dict)
             if result_dict is not None and len(result_dict):
                 results.append(result)
         return results
