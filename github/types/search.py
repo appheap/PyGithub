@@ -23,7 +23,7 @@ class SearchCodeResult(Object):
         return SearchCodeResult(
             total_count=obj.get('total_count', None),
             incomplete_results=obj.get('incomplete_results', None),
-            items=utils.parse_code_search_result_items(obj.get('items', None)),
+            items=CodeSearchResultItem._parse_list(obj.get('items', None)),
         )
 
 
@@ -67,6 +67,18 @@ class CodeSearchResultItem(Object):
             text_matches=SearchResultTextMatch._parse(obj.get('text_matches', None)),
         )
 
+    @staticmethod
+    def _parse_list(result_items: list) -> Optional[List['CodeSearchResultItem']]:
+        if type(result_items) != list:
+            return []
+
+        results: List['CodeSearchResultItem'] = []
+        for result_dict in result_items:
+            result = CodeSearchResultItem._parse(result_dict)
+            if result_dict is not None and len(result_dict):
+                results.append(result)
+        return results
+
 
 @dataclass
 class SearchResultTextMatch(Object):
@@ -89,7 +101,7 @@ class SearchResultTextMatch(Object):
             object_type=obj.get('object_type', None),
             property=obj.get('property', None),
             fragment=obj.get('fragment', None),
-            matches=utils.parse_matches(obj.get('matches', None)),
+            matches=Match._parse_list(obj.get('matches', None)),
         )
 
 
@@ -108,6 +120,18 @@ class Match(Object):
             indices=obj.get('indices', None),
         )
 
+    @staticmethod
+    def _parse_list(matches_list: list) -> Optional[List['Match']]:
+        if type(matches_list) != list:
+            return []
+
+        matches: List['Match'] = []
+        for match_dict in matches_list:
+            match = Match._parse(match_dict)
+            if match_dict is not None and len(match_dict):
+                matches.append(match)
+        return matches
+
 
 ######################################################################################
 
@@ -118,14 +142,14 @@ class SearchRepositoriesResult(Object):
     items: Optional[List['RepoSearchResultItem']]
 
     @staticmethod
-    def _parse(obj: dict) -> Optional['SearchCodeResult']:
+    def _parse(obj: dict) -> Optional['SearchRepositoriesResult']:
         if obj is None or not len(obj):
             return None
 
-        return SearchCodeResult(
+        return SearchRepositoriesResult(
             total_count=obj.get('total_count', None),
             incomplete_results=obj.get('incomplete_results', None),
-            items=utils.parse_repo_search_result_items(obj.get('items', None)),
+            items=RepoSearchResultItem._parse_list(obj.get('items', None)),
         )
 
 
@@ -316,6 +340,18 @@ class RepoSearchResultItem(Object):
             allow_forking=obj.get('allow_forking', None),
             is_template=obj.get('is_template', None),
         )
+
+    @staticmethod
+    def _parse_list(result_items: list) -> Optional[List['RepoSearchResultItem']]:
+        if type(result_items) != list:
+            return []
+
+        results: List['RepoSearchResultItem'] = []
+        for result_dict in result_items:
+            result = RepoSearchResultItem._parse(result_dict)
+            if result_dict is not None and len(result_dict):
+                results.append(result)
+        return results
 
 
 ######################################################################################
