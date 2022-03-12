@@ -316,3 +316,145 @@ class RepoSearchResultItem(Object):
             allow_forking=obj.get('allow_forking', None),
             is_template=obj.get('is_template', None),
         )
+
+
+######################################################################################
+@dataclass
+class SearchTopicsResult(Object):
+    total_count: Optional['int']
+    incomplete_results: Optional['bool']
+    items: Optional[List['TopicSearchResultItem']]
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['SearchTopicsResult']:
+        if obj is None or not len(obj):
+            return None
+
+        return SearchTopicsResult(
+            total_count=obj.get('total_count', None),
+            incomplete_results=obj.get('incomplete_results', None),
+            items=TopicSearchResultItem._parse_list(obj.get('items', None)),
+        )
+
+
+@dataclass
+class TopicSearchResultItem(Object):
+    """
+    Topic Search Result Item
+    """
+    name: Optional['str']
+    display_name: Optional['str']
+    short_description: Optional['str']
+    description: Optional['str']
+    created_by: Optional['str']
+    released: Optional['str']
+    created_at: Optional['str']
+    updated_at: Optional['str']
+    featured: Optional['bool']
+    curated: Optional['bool']
+    score: Optional['float']
+    repository_count: Optional['int']
+    logo_url: Optional['str']
+    text_matches: Optional['SearchResultTextMatch']
+    related: Optional[List['RelatedObject']]
+    aliases: Optional[List['AliasObject']]
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['TopicSearchResultItem']:
+        if obj is None or not len(obj):
+            return None
+
+        return TopicSearchResultItem(
+            name=obj.get('name', None),
+            display_name=obj.get('display_name', None),
+            short_description=obj.get('short_description', None),
+            description=obj.get('description', None),
+            created_by=obj.get('created_by', None),
+            released=obj.get('released', None),
+            created_at=obj.get('created_at', None),
+            updated_at=obj.get('updated_at', None),
+            featured=obj.get('featured', None),
+            curated=obj.get('curated', None),
+            score=obj.get('score', None),
+            repository_count=obj.get('repository_count', None),
+            logo_url=obj.get('logo_url', None),
+            text_matches=SearchResultTextMatch._parse(obj.get('text_matches', None)),
+            related=RelatedObject._parse_list(obj.get('related', None)),
+            aliases=AliasObject._parse_list(obj.get('aliases', None)),
+        )
+
+    @staticmethod
+    def _parse_list(result_items: list) -> Optional[List['TopicSearchResultItem']]:
+        if type(result_items) != list:
+            return []
+
+        results: List['TopicSearchResultItem'] = []
+        for result_dict in result_items:
+            result = TopicSearchResultItem._parse(result_dict)
+            if result_dict is not None and len(result_dict):
+                results.append(result)
+        return results
+
+
+@dataclass
+class RelatedObject(Object):
+    id: Optional['int']
+    name: Optional['str']
+    topic_id: Optional['int']
+    relation_type: Optional['str']
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['RelatedObject']:
+        if obj is None or not len(obj):
+            return None
+
+        return RelatedObject(
+            id=obj.get('id', None),
+            name=obj.get('name', None),
+            topic_id=obj.get('topic_id', None),
+            relation_type=obj.get('relation_type', None),
+        )
+
+    @staticmethod
+    def _parse_list(result_items: list) -> Optional[List['RelatedObject']]:
+        if type(result_items) != list:
+            return []
+
+        results: List['RelatedObject'] = []
+        for result_dict in result_items:
+            result = RelatedObject._parse(result_dict)
+            if result_dict is not None and len(result_dict):
+                results.append(result)
+        return results
+
+
+@dataclass
+class AliasObject(Object):
+    id: Optional['int']
+    name: Optional['str']
+    topic_id: Optional['int']
+    relation_type: Optional['str']
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['AliasObject']:
+        if obj is None or not len(obj):
+            return None
+
+        return AliasObject(
+            id=obj.get('id', None),
+            name=obj.get('name', None),
+            topic_id=obj.get('topic_id', None),
+            relation_type=obj.get('relation_type', None),
+        )
+
+    @staticmethod
+    def _parse_list(result_items: list) -> Optional[List['AliasObject']]:
+        if type(result_items) != list:
+            return []
+
+        results: List['AliasObject'] = []
+        for result_dict in result_items:
+            result = AliasObject._parse(result_dict)
+            if result_dict is not None and len(result_dict):
+                results.append(result)
+        return results
