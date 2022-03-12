@@ -132,6 +132,30 @@ def parse_stargazers(stargazers_list: list) -> Optional[List['types.Stargazer']]
     return stargazers
 
 
+def parse_matches(matches_list: list) -> Optional[List['types.Match']]:
+    if type(matches_list) != list:
+        return []
+
+    matches: List['types.Match'] = []
+    for match_dict in matches_list:
+        match = types.Match._parse(match_dict)
+        if match_dict is not None and len(match_dict):
+            matches.append(match)
+    return matches
+
+
+def parse_code_search_result_items(result_items: list) -> Optional[List['types.CodeSearchResultItem']]:
+    if type(result_items) != list:
+        return []
+
+    results: List['types.CodeSearchResultItem'] = []
+    for result_dict in result_items:
+        result = types.CodeSearchResultItem._parse(result_dict)
+        if result_dict is not None and len(result_dict):
+            results.append(result)
+    return results
+
+
 def parse_last_page(response: requests.Response) -> int:
     try:
         url = response.links.get('last').get('url')
