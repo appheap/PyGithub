@@ -1,13 +1,13 @@
 from github.scaffold import Scaffold
-from github.types import Response, SearchCodeResult
+from github.types import Response, SearchRepositoriesResult
 
 
-class SearchCode(Scaffold):
+class SearchRepositories(Scaffold):
     """
-    Searches for query terms inside of a file
+    Search repositories
     """
 
-    def search_code(
+    def search_repositories(
             self,
             *,
             q: str,
@@ -17,7 +17,7 @@ class SearchCode(Scaffold):
             page: int = 1,
     ) -> 'Response':
         """
-        Searches for query terms inside of a file
+       Find repositories via various criteria.
 
 
         :param q: The query contains one or more search keywords and qualifiers.
@@ -42,7 +42,7 @@ class SearchCode(Scaffold):
         :return: 'Response'
         """
         response = self.get_with_token(
-            url=f'https://api.github.com/search/code',
+            url=f'https://api.github.com/search/repositories',
             params={
                 'q': q,
                 'sort': sort,
@@ -56,9 +56,9 @@ class SearchCode(Scaffold):
             return Response._parse(
                 response=response,
                 success=True,
-                result=SearchCodeResult._parse(response.json()),
+                result=SearchRepositoriesResult._parse(response.json()),
             )
-        elif response.status_code in (304, 503, 422, 403):
+        elif response.status_code in (304, 503, 422):
             return Response._parse(
                 response=response,
                 success=False,

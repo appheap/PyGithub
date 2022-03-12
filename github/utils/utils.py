@@ -156,6 +156,18 @@ def parse_code_search_result_items(result_items: list) -> Optional[List['types.C
     return results
 
 
+def parse_repo_search_result_items(result_items: list) -> Optional[List['types.RepoSearchResultItem']]:
+    if type(result_items) != list:
+        return []
+
+    results: List['types.RepoSearchResultItem'] = []
+    for result_dict in result_items:
+        result = types.RepoSearchResultItem._parse(result_dict)
+        if result_dict is not None and len(result_dict):
+            results.append(result)
+    return results
+
+
 def parse_last_page(response: requests.Response) -> int:
     try:
         url = response.links.get('last').get('url')
