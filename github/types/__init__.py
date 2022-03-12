@@ -23,7 +23,8 @@ from .response import Response, STATUS_CODES_MAPPING
 from .user import SimpleUser, PrivateUser, PublicUser
 from .stargazer import Stargazer
 from .search import Match, SearchResultTextMatch, CodeSearchResultItem, SearchCodeResult, SearchRepositoriesResult, \
-    RepoSearchResultItem, RelatedObject, AliasObject, TopicSearchResultItem, SearchTopicsResult
+    RepoSearchResultItem, RelatedObject, AliasObject, TopicSearchResultItem, SearchTopicsResult, SearchUsersResult, \
+    UserSearchResultItem
 
 __all__ = [
     'Headers',
@@ -69,5 +70,7 @@ __all__ = [
     'AliasObject',
     'TopicSearchResultItem',
     'SearchTopicsResult',
+    'UserSearchResultItem',
+    'SearchUsersResult',
 
 ]

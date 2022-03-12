@@ -458,3 +458,118 @@ class AliasObject(Object):
             if result_dict is not None and len(result_dict):
                 results.append(result)
         return results
+
+
+######################################################################################
+
+@dataclass
+class SearchUsersResult(Object):
+    total_count: Optional['int']
+    incomplete_results: Optional['bool']
+    items: Optional[List['RepoSearchResultItem']]
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['SearchUsersResult']:
+        if obj is None or not len(obj):
+            return None
+
+        return SearchUsersResult(
+            total_count=obj.get('total_count', None),
+            incomplete_results=obj.get('incomplete_results', None),
+            items=UserSearchResultItem._parse_list(obj.get('items', None)),
+        )
+
+
+@dataclass
+class UserSearchResultItem(Object):
+    """
+    User Search Result Item
+    """
+    login: Optional['str']
+    id: Optional['int']
+    node_id: Optional['str']
+    avatar_url: Optional['str']
+    gravatar_url: Optional['str']
+    url: Optional['str']
+    html_url: Optional['str']
+    followers_url: Optional['str']
+    subscriptions_url: Optional['str']
+    organizations_url: Optional['str']
+    repos_url: Optional['str']
+    received_events_url: Optional['str']
+    type: Optional['str']
+    score: Optional['float']
+    following_url: Optional['str']
+    gists_url: Optional['str']
+    starred_url: Optional['str']
+    events_url: Optional['str']
+    public_repos: Optional['int']
+    public_gists: Optional['int']
+    followers: Optional['int']
+    following: Optional['int']
+    created_at: Optional['str']
+    updated_at: Optional['str']
+    name: Optional['str']
+    bio: Optional['str']
+    email: Optional['str']
+    location: Optional['str']
+    site_admin: Optional['bool']
+    hireable: Optional['bool']
+    text_matches: Optional['SearchResultTextMatch']
+    blog: Optional['str']
+    company: Optional['str']
+    suspended_at: Optional['str']
+
+    @staticmethod
+    def _parse(obj: dict) -> Optional['UserSearchResultItem']:
+        if obj is None or not len(obj):
+            return None
+
+        return UserSearchResultItem(
+            login=obj.get('login', None),
+            id=obj.get('id', None),
+            node_id=obj.get('node_id', None),
+            avatar_url=obj.get('avatar_url', None),
+            gravatar_url=obj.get('gravatar_url', None),
+            url=obj.get('url', None),
+            html_url=obj.get('html_url', None),
+            followers_url=obj.get('followers_url', None),
+            subscriptions_url=obj.get('subscriptions_url', None),
+            organizations_url=obj.get('organizations_url', None),
+            repos_url=obj.get('repos_url', None),
+            received_events_url=obj.get('received_events_url', None),
+            type=obj.get('type', None),
+            score=obj.get('score', None),
+            following_url=obj.get('following_url', None),
+            gists_url=obj.get('gists_url', None),
+            starred_url=obj.get('starred_url', None),
+            events_url=obj.get('events_url', None),
+            public_repos=obj.get('public_repos', None),
+            public_gists=obj.get('public_gists', None),
+            followers=obj.get('followers', None),
+            following=obj.get('following', None),
+            created_at=obj.get('created_at', None),
+            updated_at=obj.get('updated_at', None),
+            name=obj.get('name', None),
+            bio=obj.get('bio', None),
+            email=obj.get('email', None),
+            location=obj.get('location', None),
+            site_admin=obj.get('site_admin', None),
+            hireable=obj.get('hireable', None),
+            text_matches=SearchResultTextMatch._parse(obj.get('text_matches', None)),
+            blog=obj.get('blog', None),
+            company=obj.get('company', None),
+            suspended_at=obj.get('suspended_at', None),
+        )
+
+    @staticmethod
+    def _parse_list(result_items: list) -> Optional[List['UserSearchResultItem']]:
+        if type(result_items) != list:
+            return []
+
+        results: List['UserSearchResultItem'] = []
+        for result_dict in result_items:
+            result = UserSearchResultItem._parse(result_dict)
+            if result_dict is not None and len(result_dict):
+                results.append(result)
+        return results
