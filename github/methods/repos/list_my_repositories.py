@@ -3,12 +3,12 @@ from github.types import Response
 from github.utils import utils
 
 
-class GetMyRepositories(Scaffold):
+class ListMyRepositories(Scaffold):
     """
     List repositories for the authenticated user
     """
 
-    def get_my_repositories(
+    def list_my_repositories(
             self,
             *,
             visibility: str = 'all',

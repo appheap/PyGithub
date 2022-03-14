@@ -2,7 +2,7 @@ from github.scaffold import Scaffold
 from github.types import Repository, Response
 
 
-class CreateOrgRepository(Scaffold):
+class CreateOrganizationRepository(Scaffold):
     """
     Create an organization repository
     """

@@ -1,14 +1,14 @@
-from .create_org_repository import CreateOrgRepository
+from .create_organization_repository import CreateOrganizationRepository
 from .get_a_repository import GetARepository
-from .get_my_repositories import GetMyRepositories
+from .list_my_repositories import ListMyRepositories
 from .list_organization_repositories import ListOrganizationRepositories
 from .list_user_repositories import ListUserRepositories
 
 
 class Repos(
-    CreateOrgRepository,
-    GetMyRepositories,
+    CreateOrganizationRepository,
     GetARepository,
+    ListMyRepositories,
     ListUserRepositories,
     ListOrganizationRepositories,
 
