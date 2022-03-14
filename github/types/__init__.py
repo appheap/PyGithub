@@ -26,6 +26,8 @@ from .search import Match, SearchResultTextMatch, CodeSearchResultItem, SearchCo
     RepoSearchResultItem, RelatedObject, AliasObject, TopicSearchResultItem, SearchTopicsResult, SearchUsersResult, \
     UserSearchResultItem, LabelSearchResultItem, LabelSearchResult
 
+from .rate_limit import RateLimitOverview, RateLimit, Resources
+
 __all__ = [
     'Headers',
     'SimpleLicense',
@@ -74,5 +76,7 @@ __all__ = [
     'SearchUsersResult',
     'LabelSearchResult',
     'LabelSearchResultItem',
-
+    'RateLimit',
+    'RateLimitOverview',
+    'Resources',
 ]
