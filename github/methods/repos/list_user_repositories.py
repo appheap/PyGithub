@@ -1,16 +1,14 @@
-from typing import List, Optional, Tuple, Union
-
 from github.scaffold import Scaffold
-from github.types import Repository, Response
+from github.types import Response
 from github.utils import utils
 
 
-class GetUserRepositories(Scaffold):
+class ListUserRepositories(Scaffold):
     """
     List repositories for a user
     """
 
-    def get_user_repositories(
+    def list_user_repositories(
             self,
             *,
             username: str = None,
