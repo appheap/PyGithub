@@ -3,12 +3,12 @@ from github.types import Response
 from github.utils import utils
 
 
-class GetOrgRepositories(Scaffold):
+class ListOrganizationRepositories(Scaffold):
     """
     List organization repositories
     """
 
-    def get_org_repositories(
+    def list_organization_repositories(
             self,
             *,
             organization: str = None,
