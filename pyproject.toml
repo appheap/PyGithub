@@ -1,8 +1,36 @@
 [tool.poetry]
-name = "pygithub"
+name = "PythonGithubClient"
 version = "0.1.0"
-description = ""
-authors = ["sigma1326 <taleb.zarhesh@gmail.com>"]
+description = "A Python Client for the GitHub REST API"
+homepage = "https://github.com/appheap/PyGithub"
+repository = "https://github.com/appheap/PyGithub"
+authors = ["taleb.zarhesh <taleb.zarhesh@gmail.com>"]
+maintainers = ["taleb.zarhesh <taleb.zarhesh@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+include = [
+    "LICENSE",
+]
+packages = [
+    { include = "github" }
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = [
+    "github",
+    "python",
+    "github-client",
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
