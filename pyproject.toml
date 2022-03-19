@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "PythonGithubClient"
+name = "pyghc"
 version = "0.1.0"
 description = "A Python Client for the GitHub REST API"
 homepage = "https://github.com/appheap/PyGithub"
